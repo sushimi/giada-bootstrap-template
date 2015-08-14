@@ -206,7 +206,8 @@
 		  // Create a map object, and include the MapTypeId to add
 		  // to the map type control.
 		  var mapOptions = {
-		    zoom: 16, 				//zoom level
+		    zoom: 16, 				//zoom level	
+            draggable: false,
 		    center: myCenter, 		//center position
 			scrollwheel: false, 	//zoom when scroll disable
 		    zoomControl: true, 		//show control zoom
@@ -223,13 +224,31 @@
 		  map.mapTypes.set('map_style', styledMap);
 		  map.setMapTypeId('map_style');
 
-		  
-		  
+		   /* Marker */
+		  var contentString = 
+		      '<div class="popup">'+
+		      '<h2>Giada</h2>'+
+		      '<p>Bahnhofstrasse 5, 6003 Luzern<br/>'+
+		      '<a target="_blank" href="https://www.google.it/maps/place/Bahnhofstrasse+5,+6003+Luzern,+Svizzera/@47.0507365,8.3078632,17z/data=!3m1!4b1!4m2!3m1!1s0x478ffb98b460e6a5:0x342af9c5a86f48b5">'+
+		      'Open in Google Maps &#187;</a> '+
+		      '</div>';
+		      
+		  var infowindow = new google.maps.InfoWindow({
+		      content: contentString,
+		      maxWidth: 500,
+		      maxHeight: 500,
+		
+		  });
+		  var image = 'img/map.svg';
 		  var myLatlng = new google.maps.LatLng(47.050736, 8.307855);
 		  var marker = new google.maps.Marker({
 		      position: myLatlng,
 		      map: map,
-		      title: 'My company'
+		      icon: image,
+		      title: 'Giada'
+		  }); 
+		  google.maps.event.addListener(marker, 'click', function() {
+		    infowindow.open(map,marker);
 		  });
 		  
 		}
